@@ -1,3 +1,5 @@
 {
-  "block.kingdomcraft.kingdom_crystal": "Kingdom Crystal"
+  "block.kingdomcraft.kingdom_crystal": "Kingdom Crystal",
+  "chunks.claim.chunk": "You have successfully claimed this chunk",
+  "chunks.debug": "See Kingdom Chunks %s"
 }

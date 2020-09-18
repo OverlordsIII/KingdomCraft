@@ -1,4 +1,4 @@
-package overlordsiii.github.io.kingdomcraft.block;
+package overlordsiii.github.io.kingdomcraft.registry;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import overlordsiii.github.io.kingdomcraft.KingdomCraft;
+import overlordsiii.github.io.kingdomcraft.block.KingdomCrystalBlock;
 
 import static overlordsiii.github.io.kingdomcraft.KingdomCraft.MOD_ID;
 

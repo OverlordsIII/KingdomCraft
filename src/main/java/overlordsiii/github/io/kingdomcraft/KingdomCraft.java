@@ -2,14 +2,13 @@ package overlordsiii.github.io.kingdomcraft;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import overlordsiii.github.io.kingdomcraft.block.BlockRegistry;
-import overlordsiii.github.io.kingdomcraft.block.entity.BlockEntityRegistry;
+import overlordsiii.github.io.kingdomcraft.registry.BlockRegistry;
+import overlordsiii.github.io.kingdomcraft.registry.BlockEntityRegistry;
 
 public class KingdomCraft implements ModInitializer {
     public static final ItemGroup KingdomCraftGroup = FabricItemGroupBuilder.build(
@@ -19,9 +18,10 @@ public class KingdomCraft implements ModInitializer {
     public static Logger LOGGER = LogManager.getLogger(MOD_ID);
     @Override
     public void onInitialize() {
-        LOGGER.info("Initialized Kingdom Craft!");
+
         BlockRegistry.initialize();
         BlockEntityRegistry.initialize();
 
+       LOGGER.info("Initialized Kingdom Craft!");
     }
 }
