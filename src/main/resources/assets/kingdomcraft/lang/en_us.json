@@ -1,5 +1,8 @@
 {
   "block.kingdomcraft.kingdom_crystal": "Kingdom Crystal",
   "chunks.claim.chunk": "You have successfully claimed this chunk",
-  "chunks.debug": "See Kingdom Chunks %s"
+  "chunks.debug": "See Kingdom Chunks %s",
+  "linked.wand": "Successfully linked your wand to your kingdom",
+   "link.fail": "Failed to link your wand to your kingdom",
+  "chunk.distance.fail": "The chunk you tried to claim was too far from your kingdomcrystal"
 }

@@ -7,8 +7,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import overlordsiii.github.io.kingdomcraft.networking.ServerSideNetworking;
 import overlordsiii.github.io.kingdomcraft.registry.BlockRegistry;
 import overlordsiii.github.io.kingdomcraft.registry.BlockEntityRegistry;
+import overlordsiii.github.io.kingdomcraft.registry.ItemRegistry;
 
 public class KingdomCraft implements ModInitializer {
     public static final ItemGroup KingdomCraftGroup = FabricItemGroupBuilder.build(
@@ -21,7 +23,8 @@ public class KingdomCraft implements ModInitializer {
 
         BlockRegistry.initialize();
         BlockEntityRegistry.initialize();
-
+        ItemRegistry.initialize();
+        ServerSideNetworking.initialize();
        LOGGER.info("Initialized Kingdom Craft!");
     }
 }
