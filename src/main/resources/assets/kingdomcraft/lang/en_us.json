@@ -3,6 +3,7 @@
   "chunks.claim.chunk": "You have successfully claimed this chunk",
   "chunks.debug": "See Kingdom Chunks %s",
   "linked.wand": "Successfully linked your wand to your kingdom",
-   "link.fail": "Failed to link your wand to your kingdom",
-  "chunk.distance.fail": "The chunk you tried to claim was too far from your kingdomcrystal"
+   "link.fail": "Failed to link your wand to your kingdom! Have you tried to add a kingdomcrystal and its kingdom name?",
+  "chunk.distance.fail": "The chunk you tried to claim was too far from your kingdomcrystal",
+  "chunk.claim.yes": "Yes, I want to claim this chunk"
 }

@@ -1,34 +1,42 @@
 package overlordsiii.github.io.kingdomcraft.client.screen;
 
+import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
+import io.github.cottonmc.cotton.gui.widget.WButton;
+import io.github.cottonmc.cotton.gui.widget.WGridPanel;
+import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
+import io.github.cottonmc.cotton.gui.widget.data.Texture;
+import io.github.cottonmc.cotton.gui.widget.icon.TextureIcon;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import overlordsiii.github.io.kingdomcraft.networking.PacketIds;
 
-public class ChunkClaimScreen extends Screen {
+import static overlordsiii.github.io.kingdomcraft.KingdomCraft.MOD_ID;
+
+public class ChunkClaimScreen extends LightweightGuiDescription {
     public BlockPos entitypos;
     public BlockPos playerpos;
     public ChunkClaimScreen(BlockPos crystalPos, BlockPos playerPos) {
-        super(new TranslatableText("gui.claim.text"));
         this.entitypos = crystalPos;
         this.playerpos = playerPos;
-    }
+        WGridPanel root = new WGridPanel();
+        setRootPanel(root);
+        root.setSize(256, 240);
 
-    @Override
-    protected void init() {
-        this.addButton(new ButtonWidget(0, 0, 0, 0, new TranslatableText("claim.chunk.yes"), (buttonWidget)->{
+        WButton button = new WButton(new TranslatableText("chunk.claim.yes"));
+        button.setOnClick(() -> {
             PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
             byteBuf.writeBlockPos(entitypos);
             byteBuf.writeBlockPos(playerpos);
             ClientSidePacketRegistry.INSTANCE.sendToServer(PacketIds.chunkClaimedId, byteBuf);
-        }));
-        this.addButton(new ButtonWidget(this.width / 2 - 155, this.height / 6 + 96, 150, 20, new TranslatableText("claim.chunk.no"), (buttonWidget) -> {
-
-        }));
-
+        });
+        button.setAlignment(HorizontalAlignment.LEFT);
+        button.setIcon(new TextureIcon(new Texture(new Identifier(MOD_ID, "textures/libgui/green_checkmark.png"))));
+        root.add(button, 0, 3, 8, 1);
+        root.validate(this);
     }
+
 }

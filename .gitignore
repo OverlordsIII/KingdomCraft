@@ -16,6 +16,8 @@ out/
 .settings/
 .vscode/
 bin/
+
+#eclipse
 .classpath
 .project
 

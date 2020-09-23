@@ -1,9 +1,9 @@
 package overlordsiii.github.io.kingdomcraft.item;
 
+import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,9 +43,9 @@ public class KingdomWand extends Item {
     @Environment(EnvType.CLIENT)
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (crystalentity != null && hand == Hand.MAIN_HAND){
+        if (crystalentity != null && hand == Hand.MAIN_HAND && crystalentity.getKingdomName() != null){
             if (world.isClient){
-                MinecraftClient.getInstance().openScreen(new ChunkClaimScreen(crystalentity.getPos(), user.getBlockPos()));
+                MinecraftClient.getInstance().openScreen(new CottonClientScreen(new ChunkClaimScreen(this.crystalentity.getPos(), user.getBlockPos())));
                 return new TypedActionResult<>(ActionResult.SUCCESS, user.getStackInHand(hand));
             }
         }
