@@ -18,7 +18,11 @@ repositories{
         name = "CottonMC"
         url = "https://server.bbkr.space/artifactory/libs-release"
     }
-
+    maven {
+        name = "Ladysnake Libs"
+        url = "https://dl.bintray.com/ladysnake/libs"
+    }
+    maven { url "https://maven.jamieswhiteshirt.com/libs-release/" }
 
 }
 
@@ -31,8 +35,15 @@ dependencies {
     //Guis, since im bad at vanilla client screens
     modImplementation "io.github.cottonmc:LibGui:3.0.0-beta.1+1.16.2-rc2"
     include "io.github.cottonmc:LibGui:3.0.0-beta.1+1.16.2-rc2"
-    //Baritone so i can use someone elses api
-
+    //cca to do store data for me
+    modApi "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.6.0"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.6.0"
+    //world cca
+    modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-world:2.6.0"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-world:2.6.0"
+    //big brain stuff...
+    include "com.jamieswhiteshirt:rtree-3i-lite-fabric:${project.rtree_version}"
+    modCompile "com.jamieswhiteshirt:rtree-3i-lite-fabric:${project.rtree_version}"
 }
 
 processResources {

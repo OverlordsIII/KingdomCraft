@@ -1,22 +1,12 @@
 package overlordsiii.github.io.kingdomcraft.item;
 
-import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import overlordsiii.github.io.kingdomcraft.block.entity.KingdomCrystalBlockEntity;
-import overlordsiii.github.io.kingdomcraft.client.screen.ChunkClaimScreen;
 import overlordsiii.github.io.kingdomcraft.registry.BlockRegistry;
 
 public class KingdomWand extends Item {
@@ -40,18 +30,5 @@ public class KingdomWand extends Item {
         }
         return ActionResult.SUCCESS;
     }
-    @Environment(EnvType.CLIENT)
-    @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (crystalentity != null && hand == Hand.MAIN_HAND && crystalentity.getKingdomName() != null){
-            if (world.isClient){
-                MinecraftClient.getInstance().openScreen(new CottonClientScreen(new ChunkClaimScreen(this.crystalentity.getPos(), user.getBlockPos())));
-                return new TypedActionResult<>(ActionResult.SUCCESS, user.getStackInHand(hand));
-            }
-        }
-        else{
-            user.sendMessage(new TranslatableText("link.fail").formatted(Formatting.RED), true);
-        }
-        return new TypedActionResult<>(ActionResult.PASS, user.getStackInHand(hand));
-    }
+
 }
