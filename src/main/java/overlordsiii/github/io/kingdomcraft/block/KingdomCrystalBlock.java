@@ -48,7 +48,7 @@ public class KingdomCrystalBlock extends BlockWithEntity {
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
        if (!world.isClient){
            Kingdom kingdom = new Kingdom(placer.getUuid(), pos);
-           KingdomCraft.KINGDOM.get(world).add(kingdom, new KingdomArea(pos, 15));
+           KingdomCraft.KINGDOM.get(world).add(new KingdomArea(pos, 15), kingdom);
        }
     }
 

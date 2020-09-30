@@ -7,6 +7,6 @@ import overlordsiii.github.io.kingdomcraft.api.KingdomArea;
 
 public interface KingdomComponent extends WorldSyncedComponent {
     RTreeMap<KingdomArea, Kingdom> getKingdoms();
-    void add(Kingdom kingdom, KingdomArea area);
-    void remove(Kingdom kingdom, KingdomArea area);
+    void add(KingdomArea kingdom, Kingdom area);
+    void remove(KingdomArea area);
 }

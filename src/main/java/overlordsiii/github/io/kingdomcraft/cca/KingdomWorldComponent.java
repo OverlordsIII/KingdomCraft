@@ -12,85 +12,86 @@ import overlordsiii.github.io.kingdomcraft.KingdomCraft;
 import overlordsiii.github.io.kingdomcraft.api.Kingdom;
 import overlordsiii.github.io.kingdomcraft.api.KingdomArea;
 
-import java.util.UUID;
-
 public class KingdomWorldComponent implements KingdomComponent {
-    private RTreeMap<KingdomArea, Kingdom> kingdoms = RTreeMap.create(new ConfigurationBuilder().build(), KingdomArea::toBox);
+    private RTreeMap<KingdomArea, Kingdom> claims = RTreeMap.create(new ConfigurationBuilder().star().build(), KingdomArea::toBox);
     private final World world;
-    public KingdomWorldComponent(World world){
+    public KingdomWorldComponent(World world) {
         this.world = world;
-        System.out.println("constructed...");
     }
+
+    @Override
+    public RTreeMap<KingdomArea, Kingdom> getKingdoms() {
+        return claims;
+    }
+
+    @Override
+    public void add(KingdomArea box, Kingdom info) {
+        this.claims = this.claims.put(box, info);
+        sync();
+        System.out.println(this.claims.size());
+        System.out.println("ADDED CLAIM");
+    }
+
+    @Override
+    public void remove(KingdomArea box) {
+        this.claims = this.claims.remove(box);
+        sync();
+    }
+
+    @Override
+    public void fromTag(CompoundTag tag) {
+        this.claims = RTreeMap.create(new ConfigurationBuilder().star().build(), KingdomArea::toBox);
+
+        ListTag listTag = tag.getList("Claims", NbtType.COMPOUND);
+
+        listTag.forEach(child -> {
+            CompoundTag childCompound = (CompoundTag) child;
+            KingdomArea box = boxFromTag((CompoundTag) childCompound.get("Box"));
+            Kingdom claimInfo = Kingdom.fromTag((CompoundTag) childCompound.get("Info"));
+            add(box, claimInfo);
+        });
+    }
+
+    @Override
+    public CompoundTag toTag(CompoundTag tag) {
+        ListTag listTagClaims = new ListTag();
+
+        claims.entries().forEach(claim -> {
+            CompoundTag claimTag = new CompoundTag();
+
+            claimTag.put("Box", serializeBox(claim.getKey()));
+            claimTag.put("Info", claim.getValue().toTag());
+
+            listTagClaims.add(claimTag);
+        });
+
+        tag.put("Claims", listTagClaims);
+        return tag;
+    }
+
+    public CompoundTag serializeBox(KingdomArea box) {
+        CompoundTag boxTag = new CompoundTag();
+
+        boxTag.putLong("OriginPos", box.getPos().asLong());
+        boxTag.putInt("Radius", box.getRadius());
+
+        return boxTag;
+    }
+
+    public KingdomArea boxFromTag(CompoundTag tag) {
+        BlockPos originPos = BlockPos.fromLong(tag.getLong("OriginPos"));
+        int radius = tag.getInt("Radius");
+        return new KingdomArea(originPos, radius);
+    }
+
     @Override
     public World getWorld() {
         return world;
     }
 
     @Override
-    public void fromTag(CompoundTag compoundTag) {
-        this.kingdoms = RTreeMap.create(new ConfigurationBuilder().star().build(), KingdomArea::toBox);
-        ListTag listTag = compoundTag.getList("kingdoms", NbtType.COMPOUND);
-        listTag.forEach(kingdom ->{
-            CompoundTag tag = (CompoundTag)kingdom;
-            KingdomArea area = KingdomArea.deserialize((CompoundTag) tag.get("kingdomarea"));
-            Kingdom kingdom1 = desearilize((CompoundTag) tag.get("kingdom"));
-            add(kingdom1, area);
-        });
-        System.out.println("TAG FROM");
-    }
-
-    @Override
-    public CompoundTag toTag(CompoundTag compoundTag) {
-        ListTag listTag = new ListTag();
-        kingdoms.entries().forEach((kingdom -> {
-            CompoundTag tag = new CompoundTag();
-            tag.put("kingdomarea", kingdom.getKey().serialize());
-            tag.put("kingdom", kingdom.getValue().toTag());
-            listTag.add(tag);
-        }));
-        compoundTag.put("kingdoms", listTag);
-        System.out.println("TAGGERS" + compoundTag);
-        return compoundTag;
-
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @implNote The default implementation should generally be overridden.
-     * This implementation performs a linear-time lookup on the provider to find the component type
-     * this component is associated with.
-     * Implementing classes can nearly always provide a better implementation.
-     */
-    @Override
     public ComponentType<?> getComponentType() {
         return KingdomCraft.KINGDOM;
-    }
-
-    @Override
-    public RTreeMap<KingdomArea, Kingdom> getKingdoms() {
-        return kingdoms;
-    }
-
-    @Override
-    public void add(Kingdom kingdom, KingdomArea area) {
-        kingdoms.put(area, kingdom);
-        sync();
-        System.out.println("ADDED CLAIM!");
-        System.out.println(kingdoms);
-        System.out.println(kingdoms.size());
-    }
-
-    @Override
-    public void remove(Kingdom kingdom, KingdomArea area) {
-        kingdoms.remove(area, kingdom);
-        System.out.println("REMOVEd");
-        sync();
-    }
-    public Kingdom desearilize(CompoundTag tag) {
-        UUID ruler = tag.getUuid("ruler");
-        BlockPos pos = BlockPos.fromLong(tag.getLong("pos"));
-        return new Kingdom(ruler, pos);
     }
 
 }

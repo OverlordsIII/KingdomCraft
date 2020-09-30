@@ -32,6 +32,11 @@ public class Kingdom {
         tag.putLong("pos", pos.asLong());
         return tag;
     }
+    public static Kingdom fromTag(CompoundTag tag){
+        UUID uuid = tag.getUuid("ruler");
+        BlockPos blockPos = BlockPos.fromLong(tag.getLong("pos"));
+        return new Kingdom(uuid, blockPos);
+    }
 
 
 
