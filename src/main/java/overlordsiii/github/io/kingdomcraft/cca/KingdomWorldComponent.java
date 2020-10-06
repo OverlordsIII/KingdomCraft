@@ -13,7 +13,7 @@ import overlordsiii.github.io.kingdomcraft.api.Kingdom;
 import overlordsiii.github.io.kingdomcraft.api.KingdomArea;
 
 public class KingdomWorldComponent implements KingdomComponent {
-    private RTreeMap<KingdomArea, Kingdom> claims = RTreeMap.create(new ConfigurationBuilder().star().build(), KingdomArea::toBox);
+    private RTreeMap<KingdomArea, Kingdom> kingdoms = RTreeMap.create(new ConfigurationBuilder().star().build(), KingdomArea::toBox);
     private final World world;
     public KingdomWorldComponent(World world) {
         this.world = world;
@@ -21,64 +21,65 @@ public class KingdomWorldComponent implements KingdomComponent {
 
     @Override
     public RTreeMap<KingdomArea, Kingdom> getKingdoms() {
-        return claims;
+        return kingdoms;
     }
 
     @Override
-    public void add(KingdomArea box, Kingdom info) {
-        this.claims = this.claims.put(box, info);
+    public void add(KingdomArea area, Kingdom kingdom) {
+        this.kingdoms = this.kingdoms.put(area, kingdom);
         sync();
-        System.out.println(this.claims.size());
+        System.out.println(this.kingdoms.size());
         System.out.println("ADDED CLAIM");
     }
 
     @Override
-    public void remove(KingdomArea box) {
-        this.claims = this.claims.remove(box);
+    public void remove(KingdomArea area) {
+        this.kingdoms = this.kingdoms.remove(area);
         sync();
     }
 
     @Override
     public void fromTag(CompoundTag tag) {
-        this.claims = RTreeMap.create(new ConfigurationBuilder().star().build(), KingdomArea::toBox);
+        this.kingdoms = RTreeMap.create(new ConfigurationBuilder().star().build(), KingdomArea::toBox);
 
-        ListTag listTag = tag.getList("Claims", NbtType.COMPOUND);
+        ListTag listTag = tag.getList("Kingdoms", NbtType.COMPOUND);
 
         listTag.forEach(child -> {
             CompoundTag childCompound = (CompoundTag) child;
-            KingdomArea box = boxFromTag((CompoundTag) childCompound.get("Box"));
-            Kingdom claimInfo = Kingdom.fromTag((CompoundTag) childCompound.get("Info"));
-            add(box, claimInfo);
+            KingdomArea area = areaFromTag((CompoundTag) childCompound.get("Area"));
+            Kingdom kingdom = Kingdom.fromTag((CompoundTag) childCompound.get("KingdomInfo"));
+            kingdom.attachCrystal(world);
+            add(area, kingdom);
         });
     }
 
     @Override
     public CompoundTag toTag(CompoundTag tag) {
-        ListTag listTagClaims = new ListTag();
+        ListTag listTagKingdoms = new ListTag();
 
-        claims.entries().forEach(claim -> {
+        kingdoms.entries().forEach(claim -> {
             CompoundTag claimTag = new CompoundTag();
 
-            claimTag.put("Box", serializeBox(claim.getKey()));
-            claimTag.put("Info", claim.getValue().toTag());
+            claimTag.put("Area", toBoxTag(claim.getKey()));
+            claimTag.put("KingdomInfo", claim.getValue().toTag());
 
-            listTagClaims.add(claimTag);
+            listTagKingdoms.add(claimTag);
         });
 
-        tag.put("Claims", listTagClaims);
+        tag.put("Kingdoms", listTagKingdoms);
         return tag;
     }
 
-    public CompoundTag serializeBox(KingdomArea box) {
-        CompoundTag boxTag = new CompoundTag();
+    public CompoundTag toBoxTag(KingdomArea area) {
+        CompoundTag areaTag = new CompoundTag();
 
-        boxTag.putLong("OriginPos", box.getPos().asLong());
-        boxTag.putInt("Radius", box.getRadius());
+        areaTag.putLong("OriginPos", area.getPos().asLong());
+        areaTag.putInt("Radius", area.getRadius());
 
-        return boxTag;
+        return areaTag;
     }
 
-    public KingdomArea boxFromTag(CompoundTag tag) {
+    public KingdomArea areaFromTag(CompoundTag tag) {
         BlockPos originPos = BlockPos.fromLong(tag.getLong("OriginPos"));
         int radius = tag.getInt("Radius");
         return new KingdomArea(originPos, radius);
@@ -91,7 +92,7 @@ public class KingdomWorldComponent implements KingdomComponent {
 
     @Override
     public ComponentType<?> getComponentType() {
-        return KingdomCraft.KINGDOM;
+        return KingdomCraft.KINGDOMS;
     }
 
 }

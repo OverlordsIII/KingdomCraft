@@ -46,9 +46,18 @@ public class KingdomCrystalBlock extends BlockWithEntity {
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-       if (!world.isClient){
+       if (!world.isClient && placer instanceof PlayerEntity){
+
+
            Kingdom kingdom = new Kingdom(placer.getUuid(), pos);
-           KingdomCraft.KINGDOM.get(world).add(new KingdomArea(pos, 15), kingdom);
+                kingdom.attachCrystal(world);
+               if (world.getBlockEntity(pos) instanceof KingdomCrystalBlockEntity){
+                   KingdomCrystalBlockEntity entity = (KingdomCrystalBlockEntity)world.getBlockEntity(pos);
+                   assert entity != null;
+                   entity.setLinkedPlayer((PlayerEntity) placer);
+                   entity.setPos(pos);
+               }
+           KingdomCraft.KINGDOMS.get(world).add(new KingdomArea(pos, 15), kingdom);
        }
     }
 
@@ -81,7 +90,7 @@ public class KingdomCrystalBlock extends BlockWithEntity {
             BlockEntity e = world.getBlockEntity(pos);
             if (e instanceof KingdomCrystalBlockEntity){
                 KingdomCrystalBlockEntity entity = (KingdomCrystalBlockEntity)e;
-                if (player.equals(entity.linkedPlayer)){
+                if (player.equals(entity.getLinkedPlayer())){
                     MinecraftClient.getInstance().openScreen(new CottonClientScreen(new KingdomNameScreen()));
                 }
             }

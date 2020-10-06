@@ -6,34 +6,45 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.chunk.WorldChunk;
+import overlordsiii.github.io.kingdomcraft.api.Kingdom;
 import overlordsiii.github.io.kingdomcraft.item.KingdomWand;
 import overlordsiii.github.io.kingdomcraft.registry.BlockEntityRegistry;
 
-import java.util.HashMap;
-
 public class KingdomCrystalBlockEntity extends BlockEntity {
-    private HashMap<ChunkPos, WorldChunk> chunksOwned = new HashMap<>();
-    public PlayerEntity linkedPlayer;
-    public KingdomWand linkedWand;
+    private PlayerEntity linkedPlayer;
+    private KingdomWand linkedWand;
     private Text kingdomName;
-
+    private Kingdom kingdom;
 
     public KingdomCrystalBlockEntity() {
         super(BlockEntityRegistry.CrystalEntityType);
     }
 
-    public int getBlockRange(){
-        return 128;
-    }
+
     public Text getKingdomName(){
         return kingdomName;
     }
     public void setKingdomName(Text text){
         kingdomName = text;
     }
-
+    public void setLinkedPlayer(PlayerEntity entity){
+        this.linkedPlayer = entity;
+    }
+    public PlayerEntity getLinkedPlayer(){
+        return linkedPlayer;
+    }
+    public void setLinkedWand(KingdomWand wand){
+        this.linkedWand = wand;
+    }
+    public KingdomWand getLinkedWand(){
+        return this.linkedWand;
+    }
+    public void setKingdom(Kingdom kingdom){
+        this.kingdom = kingdom;
+    }
+    public Kingdom getKingdom(){
+        return this.kingdom;
+    }
     @Override
     public CompoundTag toTag(CompoundTag tag) {
         if (kingdomName != null) {

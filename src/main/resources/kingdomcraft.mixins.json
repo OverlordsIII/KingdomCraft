@@ -3,6 +3,7 @@
   "package": "overlordsiii.github.io.kingdomcraft.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+
   ],
   "client": [
     "WorldRendererMixin"
