@@ -23,6 +23,7 @@ repositories{
         url = "https://dl.bintray.com/ladysnake/libs"
     }
     maven { url "https://maven.jamieswhiteshirt.com/libs-release/" }
+    maven { url 'https://jitpack.io' }
 
 }
 
@@ -44,6 +45,9 @@ dependencies {
     //big brain stuff...
     include "com.jamieswhiteshirt:rtree-3i-lite-fabric:${project.rtree_version}"
     modCompile "com.jamieswhiteshirt:rtree-3i-lite-fabric:${project.rtree_version}"
+    //uuid auto auth for authme
+    modRuntime 'com.github.Axieum:AuthMe:v1.3.2'
+
 }
 
 processResources {

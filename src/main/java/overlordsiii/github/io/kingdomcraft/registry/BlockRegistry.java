@@ -13,7 +13,7 @@ import overlordsiii.github.io.kingdomcraft.block.KingdomCrystalBlock;
 import static overlordsiii.github.io.kingdomcraft.KingdomCraft.MOD_ID;
 
 public class BlockRegistry {
-    public static KingdomCrystalBlock crystalBlock = new KingdomCrystalBlock(FabricBlockSettings.of(Material.METAL).strength(0.5f, 2));
+    public static KingdomCrystalBlock crystalBlock = new KingdomCrystalBlock(FabricBlockSettings.of(Material.METAL).strength(0.5f, 2).nonOpaque(), 15);
     public static void initialize(){
         register("kingdom_crystal", crystalBlock);
     }

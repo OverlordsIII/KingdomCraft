@@ -9,8 +9,10 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import overlordsiii.github.io.kingdomcraft.KingdomCraft;
-import overlordsiii.github.io.kingdomcraft.api.Kingdom;
-import overlordsiii.github.io.kingdomcraft.api.KingdomArea;
+import overlordsiii.github.io.kingdomcraft.core.Kingdom;
+import overlordsiii.github.io.kingdomcraft.core.KingdomArea;
+
+import java.util.Objects;
 
 public class KingdomWorldComponent implements KingdomComponent {
     private RTreeMap<KingdomArea, Kingdom> kingdoms = RTreeMap.create(new ConfigurationBuilder().star().build(), KingdomArea::toBox);
@@ -28,8 +30,6 @@ public class KingdomWorldComponent implements KingdomComponent {
     public void add(KingdomArea area, Kingdom kingdom) {
         this.kingdoms = this.kingdoms.put(area, kingdom);
         sync();
-        System.out.println(this.kingdoms.size());
-        System.out.println("ADDED CLAIM");
     }
 
     @Override
@@ -46,8 +46,8 @@ public class KingdomWorldComponent implements KingdomComponent {
 
         listTag.forEach(child -> {
             CompoundTag childCompound = (CompoundTag) child;
-            KingdomArea area = areaFromTag((CompoundTag) childCompound.get("Area"));
-            Kingdom kingdom = Kingdom.fromTag((CompoundTag) childCompound.get("KingdomInfo"));
+            KingdomArea area = areaFromTag((CompoundTag) Objects.requireNonNull(childCompound.get("Area")));
+            Kingdom kingdom = Kingdom.fromTag((CompoundTag) Objects.requireNonNull(childCompound.get("KingdomInfo")));
             kingdom.attachCrystal(world);
             add(area, kingdom);
         });

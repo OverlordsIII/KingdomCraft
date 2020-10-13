@@ -7,9 +7,9 @@
 	},
 	"elements": [
 		{
-			"from": [6, 0.25, 6],
-			"to": [10, 18.25, 10],
-			"rotation": {"angle": 0, "axis": "y", "origin": [16, 11.25, 15]},
+			"from": [6, 0, 6],
+			"to": [10, 18, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [16, 11, 15]},
 			"faces": {
 				"north": {"uv": [6, 6, 7, 9.75], "texture": "#0"},
 				"east": {"uv": [6, 0, 7, 3.75], "texture": "#0"},
@@ -20,9 +20,9 @@
 			}
 		},
 		{
-			"from": [6, 3.75, 3],
-			"to": [10, 17.75, 7],
-			"rotation": {"angle": -22.5, "axis": "x", "origin": [16, 10.75, 12]},
+			"from": [6, 3.5, 3],
+			"to": [10, 17.5, 7],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [16, 10.5, 12]},
 			"faces": {
 				"north": {"uv": [5, 8.75, 6, 12.5], "texture": "#0"},
 				"east": {"uv": [9, 9, 10, 12.75], "texture": "#0"},
@@ -33,9 +33,9 @@
 			}
 		},
 		{
-			"from": [9, -2.75, 6],
-			"to": [13, 12.25, 10],
-			"rotation": {"angle": -22.5, "axis": "z", "origin": [19, 5.25, 15]},
+			"from": [9, -3, 6],
+			"to": [13, 12, 10],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [19, 5, 15]},
 			"faces": {
 				"north": {"uv": [4, 4, 5, 7.75], "texture": "#0"},
 				"east": {"uv": [4, 0, 5, 3.75], "texture": "#0"},
@@ -46,9 +46,9 @@
 			}
 		},
 		{
-			"from": [6, -1.5, 8],
-			"to": [10, 12.5, 12],
-			"rotation": {"angle": 22.5, "axis": "x", "origin": [16, 5.5, 17]},
+			"from": [6, -1.75, 8],
+			"to": [10, 12.25, 12],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [16, 5.25, 17]},
 			"faces": {
 				"north": {"uv": [3, 8, 4, 11.75], "texture": "#0"},
 				"east": {"uv": [8, 8, 9, 11.75], "texture": "#0"},
@@ -59,9 +59,9 @@
 			}
 		},
 		{
-			"from": [2, 3.25, 6],
-			"to": [6, 18.25, 10],
-			"rotation": {"angle": 22.5, "axis": "z", "origin": [12, 11.25, 15]},
+			"from": [2, 3, 6],
+			"to": [6, 18, 10],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [12, 11, 15]},
 			"faces": {
 				"north": {"uv": [4, 7.75, 5, 11.5], "texture": "#0"},
 				"east": {"uv": [0, 8, 1, 11.75], "texture": "#0"},
@@ -74,32 +74,36 @@
 	],
 	"display": {
 		"thirdperson_righthand": {
-			"translation": [0, 3, -0.21484],
+			"translation": [0, 2.25, 2.28516],
 			"scale": [1, 0.82227, 0.8457]
 		},
 		"thirdperson_lefthand": {
+			"translation": [0, 0.75, 2.75],
 			"scale": [1, 0.77344, 0.79102]
 		},
 		"firstperson_righthand": {
-			"translation": [-0.5, 0, 0],
+			"translation": [0, -2.5, 0],
 			"scale": [0.90625, 0.89063, 1]
 		},
 		"firstperson_lefthand": {
+			"translation": [1.5, -2.25, 0],
 			"scale": [0.91016, 0.93359, 1]
 		},
 		"ground": {
+			"translation": [0, 2.5, 0],
 			"scale": [1, 0.82813, 0.85156]
 		},
 		"gui": {
 			"rotation": [0, 48, 0],
-			"translation": [0, -0.5, 0],
-			"scale": [1, 0.91016, 1]
+			"translation": [0, -0.75, 0],
+			"scale": [1, 0.83594, 1]
 		},
 		"head": {
 			"translation": [0, 5.75, 0]
 		},
 		"fixed": {
 			"rotation": [-1.5, 2.25, 37.5],
+			"translation": [0.75, -0.5, 0],
 			"scale": [1, 0.93555, 1]
 		}
 	}

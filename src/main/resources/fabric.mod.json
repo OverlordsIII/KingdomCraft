@@ -7,7 +7,8 @@
   "description": "A mod about creating kingdoms and maintaing them",
   "authors": [
     "OverlordsIII",
-    "Duug_Wolfdestroy[18] \uD83D\uDC3A"
+    "Duug_Wolfdestroy[18] \uD83D\uDC3A",
+    "SickSnipes"
 
   ],
   "contact": {
@@ -15,7 +16,7 @@
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/icon.png",
 
   "environment": "*",
@@ -34,8 +35,5 @@
     "fabricloader": ">=0.7.4",
     "fabric": "*",
     "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "flamingo": "*"
   }
 }

@@ -1,4 +1,4 @@
-package overlordsiii.github.io.kingdomcraft.api;
+package overlordsiii.github.io.kingdomcraft.core;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -12,9 +12,18 @@ public class Kingdom {
     private final UUID ruler;
     private final BlockPos pos;
     private KingdomCrystalBlockEntity entity;
-    public Kingdom(UUID owner, BlockPos posofCrystal) {
+    private String kingdomName;
+    public Kingdom(UUID owner, BlockPos posofCrystal, String kingdomName) {
         this.ruler = owner;
         this.pos = posofCrystal;
+        this.kingdomName = kingdomName;
+    }
+    public String getKingdomName(){
+        return kingdomName;
+    }
+
+    public void setKingdomName(String kingdomName) {
+        this.kingdomName = kingdomName;
     }
 
     public boolean isRuler(UUID uuid) {
@@ -35,13 +44,14 @@ public class Kingdom {
         CompoundTag tag = new CompoundTag();
         tag.putUuid("ruler", ruler);
         tag.putLong("pos", pos.asLong());
-
+        tag.putString("name", kingdomName);
         return tag;
     }
     public static Kingdom fromTag(CompoundTag tag){
         UUID uuid = tag.getUuid("ruler");
         BlockPos blockPos = BlockPos.fromLong(tag.getLong("pos"));
-        return new Kingdom(uuid, blockPos);
+        String kingomname = tag.getString("name");
+        return new Kingdom(uuid, blockPos, kingomname);
     }
     public void attachCrystal(World world){
        BlockEntity entity =  world.getBlockEntity(this.pos);
@@ -52,6 +62,33 @@ public class Kingdom {
        }
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Object clone = super.clone();
+
+        return new Kingdom(this.ruler, this.pos, this.kingdomName);
+    }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Kingdom){
+            Kingdom kingdom = (Kingdom)obj;
+            if (this.kingdomName.equals(kingdom.kingdomName) && this.ruler.equals(kingdom.ruler) && this.pos.equals(kingdom.pos)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        builder.append("pos=").append(pos.toString()).append(",");
+        builder.append("ruler=").append(ruler.toString()).append(",");
+        builder.append("name=").append(kingdomName);
+        builder.append("]");
+        return builder.toString();
+    }
 }

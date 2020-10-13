@@ -1,4 +1,4 @@
-package overlordsiii.github.io.kingdomcraft.api;
+package overlordsiii.github.io.kingdomcraft.core;
 
 import com.jamieswhiteshirt.rtree3i.Box;
 import net.minecraft.nbt.CompoundTag;
@@ -23,6 +23,10 @@ public class KingdomArea {
 
     public BlockPos getPos(){
         return pos;
+    }
+
+    public void setRadius(int radius){
+        this.radius = radius;
     }
 
     public int getRadius(){
